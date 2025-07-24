@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="ASkDAgger: Active Skill-level Data Aggregation for Interactive Imitation Learning">
+  <meta name="keywords" content="Robot Learning, Uncertainty Quantification, Imitation Learning, Active Learning, Interactive Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ASkDAgger: Active Skill-level Data Aggregation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://kit.fontawesome.com/526bde3576.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="dagger">ASkDAgger</span>: Active Skill-level Data Aggregation for Interactive Imitation Learning</h1>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a target="_blank" href="https://github.com/askdagger?tab=repositories"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a target="_blank" href="https://drive.google.com/drive/folders/1hTJ5ir2tfcw2qJambNPjFePoijaEE4ny?usp=sharing"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-google-drive"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+              </span>
+            </div>    
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Human teaching effort is a significant bottleneck for the broader applicability of interactive imitation learning.
+            To reduce the number of required queries, existing methods employ active learning to query the human teacher only in uncertain, risky, or novel situations.
+            However, during these queries, the novice's planned actions are not utilized despite containing valuable information, such as the novice's capabilities, as well as corresponding uncertainty levels.
+            To this end, we allow the novice to say: <i>"I plan to do this, but I am uncertain"</i>.
+            We introduce the Active Skill-level Data Aggregation (<span class="dagger">ASkDAgger</span>) framework, which leverages teacher feedback on the novice plan in three key ways:
+            <ol>
+              <li>S-Aware Gating (SAG): Adjusts the gating threshold to track sensitivity, specificity, or a minimum success rate;</li>
+              <li>Foresight Interactive Experience Replay (FIER), which recasts valid and relabeled novice action plans into demonstrations; and</li>
+              <li>Prioritized Interactive Experience Replay (PIER), which prioritizes replay based on uncertainty, novice success, and demonstration age.</li>
+            </ol> 
+            Together, these components balance query frequency with failure incidence, reduce the number of required demonstration annotations, improve generalization, and speed up adaptation to changing domains.
+            We validate the effectiveness of <span class="dagger">ASkDAgger</span> through language-conditioned manipulation tasks in both simulation and real-world environments.
+            Code, data, and videos are available at this project page.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+
+    <div class="rows">
+
+      <!-- <span class="dagger">ASkDAgger</span> -->
+      <div class="rows is-centered">
+        <div class="row is-full-width">
+          <h2 class="title is-3"><span class="DAGGER"><span class="dagger">ASkDAgger</span></span></h2>
+        </div>
+      </div>
+      <div class="content has-text-justified">
+        <p>
+          The Active Skill-level Data Aggregation (<span class="dagger">ASkDAgger</span>) framework consists of three main components: S-Aware Gating (SAG), Foresight Interactive Experience Replay (FIER), and Prioritized Interactive Experience Replay (PIER).
+          In this interactive imitation learning framework, we allow the novice to say: "I plan to do this, but I am uncertain."
+          The uncertainty gating threshold is set by SAG to track a user-specified metric: sensitivity, specificity, or minimum system success rate.
+          This facilitates the trade-off between queries and failures.
+          Teacher feedback is obtained with FIER, enabling demonstrations through validation, relabeling, or annotation demonstrations. Lastly, PIER prioritizes replay based on novice success, uncertainty, and demonstration age.
+        </p>
+        <p>
+          Since <span class="dagger">ASkDAgger</span> relies on the novice communicating its planned actions for teacher feedback, the method is most practical for moderate feedback frequencies.
+          <span class="dagger">ASkDAgger</span> therefore targets mid- to high-level control tasks rather than end-to-end policy learning.
+          It is most applicable in scenarios where a robot has access to predefined parameterizable skills such as grasping, walking, pushing, door opening, screwing, or inserting.
+          In such cases, the robot novice needs to learn the parameters and affordances of these skills given a user-specified command.
+          When querying the teacher, the robot novice can specify which skill they plan to use, along with the parameterization of that skill.
+          If the teacher deems the novice's plan invalid, they can provide a demonstration by annotating the appropriate skill and its parameters.
+          For example, a pick skill can be parameterized by a Cartesian pick position and orientation.
+        </p>
+      </div>
+      <div class="columns is-centered">
+        <img src="static/images/askdagger_overview.png" class="interpolation-image" alt="Interpolate start reference image." width="70%"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <div class="rows is-centered">
+      <div class="row is-full-width">
+        <h2 class="title is-3">Experimental Evaluation</h2>
+      </div>
+    </div>
+    <div class="content has-text-justified">
+      <p>
+        We evaluated <span class="dagger">ASkDAgger</span> and its components in four sets of experiments.
+        First, we performed active dataset aggregation on the MNIST dataset using <a href="https://torch-uncertainty.github.io/">TorchUncertainty</a> to validate SAG extensively.
+        Second, we interactively trained <a href="https://cliport.github.io"><span class="dagger">CLIPort</span></a> agents on simulated language-conditioned tabletop manipulation tasks.
+        Third, we conducted experiments on a real-world assembly setup to demonstrate that these claims extend beyond simulation.
+        Finally, we showcase <span class="dagger">ASkDAgger</span>'s applicability by integrating it with built-in primitive actions on a Spot robot to perform a sorting task.
+      </p>
+    </div>
+    <div class="rows is-centered">
+      <div class="row is-full-width">
+        <h2 class="title is-5">MNIST Dataset Aggregation</h2>
+      </div>
+    </div>
+    <div class="content has-text-justified">
+      <p>
+        To show that SAG balances query count and system failures by tracking a user-specified metric value, we conducted experiments in which we interactively trained digit classification models on the MNIST dataset.
+        We selected this setup due to its low computational requirements, enabling extensive ablations and easy reproducibility.  
+        Since we focus on the SAG component, we applied <span class="dagger">ASkDAgger</span>, but without demonstration collection via relabeling or replay prioritization.
+        To validate whether SAG maintains a desired sensitivity, we performed interactive training for nine different desired sensitivity, specificity and success rate values.
+        The code and data from these experiments are available on <a href=https://github.com/askdagger/askdagger_mnist>GitHub</a>.
+      </p>
+      <div class="columns is-centered">
+        <img src="static/images/mnist.png" class="interpolation-image" alt="Interpolate start reference image." width="60%"/>
+      </div>
+      <p>
+        The results of these experiments are summarized above.
+        The sensitivity and specificity plots in <b>A</b> and <b>B</b> show that SAG successfully tracks the desired levels for all nine values of the desired sensitivity, specificity or minimum system success rate.
+        In success-aware mode, <b>C</b> shows that when the novice success rate is low, SAG issues enough queries to maintain the desired system success rate.
+        As the novice success rate increases, the query rate decreases, reaching a minimum once the novice success rate exceeds the desired system success rate.
+        The query rate plots also indicate that each mode requires a different query pattern to track its respective metric.
+        The success rate plots show that, in all modes, the novice ultimately learns to perform the task.
+      </p>
+    </div>
+    <div class="rows is-centered">
+      <div class="row is-full-width">
+        <h2 class="title is-5"><span class="dagger">CLIPort</span> Benchmark Tasks</h2>
+      </div>
+    </div>
+    <div class="content has-text-justified">
+      <p>
+        We also conducted experiments using <span class="dagger">ASkDAgger</span> to train <a href="https://cliport.github.io"><span class="dagger">CLIPort</span></a> agents interactively.
+        <span class="dagger">CLIPort</span> is a language-conditioned imitation-learning agent that leverages the <a href="https://openai.com/index/clip/">CLIP</a> foundation model and sample-efficient <a href="https://transporternets.github.io/">Transporter Networks</a> for vision-based manipulation.
+        We selected this setup because it allows novices to communicate their actions by indicating planned pick-and-place locations on an image alongside a language command, making it well-suited for <span class="dagger">ASkDAgger</span>.
+        We compared <span class="dagger">ASkDAgger</span>'s performance against an active <span class="dagger">DAgger</span> baseline without both PIER and FIER.
+        We also compare <span class="dagger">ASkDAgger</span> against <span class="dagger">SafeDAgger</span> and <span class="dagger">ThriftyDAgger</span>, which are also <span class="dagger">DAgger</span> approaches that incorporate active learning.
+        We also performed ablations with <span class="dagger">ASkDAgger</span> without PIER and <span class="dagger">ASkDAgger</span> without FIER to isolate the effects of the individual components.
+        The code and data from these experiments are available on <a href=https://github.com/askdagger/askdagger_cliport>GitHub</a>.
+      </p>
+    </div>
+    <div class="content has-text-justified">
+    <div class="columns is-centered">
+      <div class="column is-one-quarter">
+        <video poster="" id="pgog" autoplay controls muted loop width="100%">
+          <source src="./static/videos/pgog.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="column is-one-quarter">
+        <video poster="" id="pgos" autoplay controls muted loop width="100%">
+          <source src="./static/videos/pgos.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="column is-one-quarter">
+        <video poster="" id="ps" autoplay controls muted loop width="100%">
+          <source src="./static/videos/ps.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="column is-one-quarter">
+        <video poster="" id="pbib" autoplay controls muted loop width="100%">
+          <source src="./static/videos/pbib.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="content has-text-justified">
+      <div class="columns is-centered">
+        <img src="static/images/evaluation.png" class="interpolation-image" alt="Interpolate start reference image." width="60%"/>
+      </div>
+      <p>
+        The cumulative rewards for evaluating checkpoints on tasks with seen and unseen objects are shown above.
+        <span class="dagger">ASkDAgger</span> exhibits a clear improvement across all unseen tasks.
+        This performance gain stems from the composition of the demonstration dataset, shown below.
+        For the active <span class="dagger">DAgger</span> baselines, all demonstrations consist of annotation tuples, whereas <span class="dagger">ASkDAgger</span> collects many through validation and relabeling.
+        These relabeled demonstrations contribute to <span class="dagger">DAgger</span>'s superior performance on unseen tasks: agents sometimes obtained demonstrations by relabeling novice failures, where the intended pick was a distractor from the unseen set.
+        Moreover, <span class="dagger">ASkDAgger</span> requires significantly fewer teacher annotations to learn the tasks.
+      </p>
+      <div class="columns is-centered">
+        <img src="static/images/demo_types.png" class="interpolation-image" alt="Interpolate start reference image." width="60%"/>
+      </div>
+    </div>
+    <div class="rows is-centered">
+      <div class="row is-full-width">
+        <h2 class="title is-5">Real-World Experiments</h2>
+      </div>
+    </div>
+    <p>
+      We conducted experiments on a real-world assembly task to demonstrate that our claims extend beyond simulation and showcase <span class="dagger">ASkDAgger</span>'s applicability in real-world settings.
+      This task is a simplified version of a diesel engine assembly using 3D-printed models.
+      The procedure is shown below.
+      The setup includes a Franka Panda robot equipped with an in-hand RealSense D405 RGB-D camera and a Franka hand with custom-printed fingers for grasping bolts.
+      The objective is to pick bolts from a holder and insert them into specific locations on the engine block.
+      We use pick-and-place primitives that rely on 2D Cartesian positions, assuming a fixed height for picking and placing.
+      The task involves four bolt colors (red, yellow, green, and black) and seven insertion locations.
+      The bolts are randomly ordered and placed in a holder.
+      The human operator interacts with the robot via an interface that allows command input via speech or text.
+      In our experiments, we generate random commands in the form:
+      "<i>Insert the</i> [color] <i>bolt at location number</i> [location number]."
+    </p>
+    <div class="columns is-centered">
+        <video poster="" id="assembly" autoplay controls muted loop width="100%">
+          <source src="./static/videos/assembly.mp4" type="video/mp4">
+        </video>
+    </div>
+    <p>
+      To further demonstrate <span class="dagger">ASkDAgger</span>'s applicability in real-world scenarios, we integrated it with Spot’s built-in primitive skills to perform a sorting task.
+      Since <span class="dagger">ASkDAgger</span> is designed to work with any robot with one or more skills, we selected Spot for its built-in grasping and walking capabilities.
+      The task involves sorting objects into paper and organic waste bins, as shown below.
+    </p>
+    <div class="columns is-centered">
+        <video poster="" id="sorting" autoplay controls muted loop width="100%">
+          <source src="./static/videos/sorting.mp4" type="video/mp4">
+        </video>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <p>
+            Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> made by the amazing <a href="https://keunhong.com/">Keunhong Park</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
